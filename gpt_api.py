@@ -1,49 +1,68 @@
-import base64
-import openai
+ import base64
+from openai import OpenAI
 import streamlit as st
 
-openai.api_key = st.secrets["OPENAI_API_KEY"]
+openai_api_key = st.secrets["OPENAI_API_KEY"]
+
+client = OpenAI(api_key=openai_api_key)
 
 def gpt_api_image(image_path):
+    # Function to encode the image
     def encode_image(image_path):
         with open(image_path, "rb") as image_file:
             return base64.b64encode(image_file.read()).decode('utf-8')
 
+    # Getting the base64 string
     base64_image = encode_image(image_path)
-    # Convert your entire request into a single message string
-    user_message = f"Extract all details from this image: data:image/jpeg;base64,{base64_image}"
 
-    response = openai.ChatCompletion.create(
-        model="gpt-4",  # or any model you have access to
-        messages=[
+    response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {
+        "role": "user",
+        "content": [
             {
-                "role": "user",
-                "content": user_message
-            }
+            "type": "text",
+            "text": "Extract in full the details of which is asked of the user, provide all text that is on the screen and all options",
+            },
+            {
+            "type": "image_url",
+            "image_url": {
+                "url":  f"data:image/jpeg;base64,{base64_image}"
+            },
+            },
         ],
+        }
+    ],
     )
-
-    return response.choices[0].message.content
+    return(response.choices[0].message.content)
 
 def gpt_api_text(system_message, text):
-    completion = openai.ChatCompletion.create(
-        model="gpt-4", # or another model you have access to
+    
+    completion = client.chat.completions.create(
+        model="gpt-4o-mini",
         messages=[
-            {"role": "system", "content": f"{system_message}"},
-            {"role": "user", "content": f"{text}"}
+            {"role": "system", "content": "{system_message}"},
+            {
+                "role": "user",
+                "content": f"{text}"
+            }
         ]
     )
-    return completion.choices[0].message.content
+
+    return(completion.choices[0].message.content)
 
 def gpt_api_solver(text):
-    completion = openai.ChatCompletion.create(
-        model="gpt-4",
+    
+    completion = client.chat.completions.create(
+        model="gpt-4o-mini",
         messages=[
+            {"role": "system", "content": "You have been given the following question, which option is best suited for the question at hand. Please provide the answer in full."},
             {
-                "role": "system",
-                "content": "You have been given a question. Determine the best option and provide the answer in full."
-            },
-            {"role": "user", "content": text}
+                "role": "user",
+                "content": f"{text}"
+            }
         ]
     )
-    return completion.choices[0].message.content
+
+    return(completion.choices[0].message.content)
