@@ -37,23 +37,7 @@ def gpt_api_image(image_path):
     )
     return(response.choices[0].message.content)
 
-def gpt_api_text(system_message, text):
-    
-    completion = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "system", "content": "{system_message}"},
-            {
-                "role": "user",
-                "content": f"{text}"
-            }
-        ]
-    )
-
-    return(completion.choices[0].message.content)
-
 def gpt_api_solver(text):
-    
     completion = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
@@ -64,5 +48,4 @@ def gpt_api_solver(text):
             }
         ]
     )
-
     return(completion.choices[0].message.content)
