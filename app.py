@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 from gpt_api import gpt_api_image, gpt_api_solver
 
 st.title("Kizz-Worth AI")
