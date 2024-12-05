@@ -1,6 +1,5 @@
 import streamlit as st
 from gpt_api import gpt_api_image, gpt_api_solver
-import os
 
 st.title("Kizz-Worth AI")
 st.write("Welcome to the Kizz-Worth AI, where you can ask questions and get answers from the AI.")
