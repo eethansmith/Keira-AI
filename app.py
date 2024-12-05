@@ -9,7 +9,7 @@ st.write("### Upload your Question:")
 # Choose file from browser
 uploaded_file = st.file_uploader("Choose a file") 
 
-if uploaded_file:
+if uploaded_file not None:
     # Define the local path to save the uploaded file
     save_path = os.path.join("uploads", uploaded_file.name)
     
