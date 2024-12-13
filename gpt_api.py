@@ -39,7 +39,7 @@ def gpt_api_image(image_path):
 
 def gpt_api_solver(text):
     completion = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model="gpt-4o",
         messages=[
             {"role": "system", "content": "You have been given the following question, which option is best suited for the question at hand. Please provide the answer in full."},
             {
