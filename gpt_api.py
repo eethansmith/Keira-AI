@@ -23,7 +23,7 @@ def gpt_api_image(image_path):
         "content": [
             {
             "type": "text",
-            "text": "Extract in full the details of which is asked of the user, provide all text that is on the screen and all options",
+            "text": "With the following photo of a screen, Extract in full the details which is being asked of the user, provide all text that is on the screen and all options",
             },
             {
             "type": "image_url",
@@ -41,7 +41,7 @@ def gpt_api_solver(text):
     completion = client.chat.completions.create(
         model="gpt-4o",
         messages=[
-            {"role": "system", "content": "You have been given the following question, which option is best suited for the question at hand. Please provide the answer in full."},
+            {"role": "system", "content": "You have been provided the following question regarding UK Law, which option is best suited for the question at hand regarding to its full extent. Please provide the answer in full. Critcally analyse each option and why it is best/not best fit"},
             {
                 "role": "user",
                 "content": f"{text}"
